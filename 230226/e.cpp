@@ -22,7 +22,7 @@ int main() {
         if (!x2y.count(x)) {
             x2y[x] = unordered_set<int>();
         }
-        if (!y2x.count(x)) {
+        if (!y2x.count(y)) {
             y2x[y] = unordered_set<int>();
         }
         if (x2y[x].count(y)) {
