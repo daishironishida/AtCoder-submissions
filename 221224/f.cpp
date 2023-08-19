@@ -17,7 +17,7 @@ int main() {
     vector<int> result(N);
     for (int i = 0; i < N; i++) {
         int diff = 1;
-        int min = N * N;
+        int min = 2 * N;
         while (diff < min - 1) {
             // less
             if (i - diff >= 0) {
