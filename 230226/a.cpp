@@ -1,9 +1,4 @@
-#include <iostream>
-#include <cmath>
-#include <limits>
-#include <vector>
-#include <set>
-#include <unordered_map>
+#include <bits/stdc++.h>
 
 using namespace std;
 
