@@ -13,7 +13,7 @@ int main() {
     int N, M;
     cin >> N >> M;
     unordered_map<int, unordered_set<int>> x2y;
-    unordered_map<int, int> y_count;
+    unordered_map<int, unordered_set<int>> y2x;
 
     for (int i = 0; i < M; i++) {
         int x, y;
@@ -22,14 +22,14 @@ int main() {
         if (!x2y.count(x)) {
             x2y[x] = unordered_set<int>();
         }
-        if (!y_count.count(y)) {
-            y_count[y] = 0;
+        if (!y2x.count(x)) {
+            y2x[y] = unordered_set<int>();
         }
         if (x2y[x].count(y)) {
             continue;
         }
         x2y[x].insert(y);
-        y_count[y]++;
+        y2x[y].insert(x);
     }
 
     vector<int> result(N);
@@ -38,7 +38,7 @@ int main() {
     int first_count = 0;
     int i = 1;
     while (i <= N) {
-        if (!y_count.count(i)) {
+        if (!y2x.count(i)) {
             first = i;
             first_count++;
         }
@@ -55,8 +55,8 @@ int main() {
         int next_count = 0;
         int next = -1;
         for (int del : x2y[current]) {
-            y_count[del]--;
-            if (!y_count[del]) {
+            y2x[del].erase(current);
+            if (y2x[del].size() == 0) {
                 next_count++;
                 next = del;
             }
