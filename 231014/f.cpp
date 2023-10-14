@@ -29,9 +29,10 @@ int main() {
 
 
     map<int, Path> paths;
-    Path current = {1, 0, 0};
+    paths[1] = {1, 0, 0};
 
     for (int i = 1; i < N + 1; i++) {
+        Path current = paths[i];
         vector<Edge> &nexts = e[i];
         for (Edge &next : nexts) {
             float next_ratio = (current.sum_b + next.b) / (current.sum_c + next.c);
