@@ -48,6 +48,6 @@ int main() {
         }
     }
 
-    cout << std::setprecision(15) << (float)paths[N].sum_b / paths[N].sum_c;
+    cout << std::setprecision(15) << (double)paths[N].sum_b / paths[N].sum_c;
 
 }
