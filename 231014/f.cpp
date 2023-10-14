@@ -11,8 +11,8 @@ struct Edge {
 
 struct Path {
     int current;
-    float sum_b;
-    float sum_c;
+    long sum_b;
+    long sum_c;
 };
 
 int main() {
@@ -35,7 +35,7 @@ int main() {
         Path current = paths[i];
         vector<Edge> &nexts = e[i];
         for (Edge &next : nexts) {
-            float next_ratio = (current.sum_b + next.b) / (current.sum_c + next.c);
+            float next_ratio = float(current.sum_b + next.b) / (current.sum_c + next.c);
 
             if (paths.count(next.v)) {
                 Path &best = paths[next.v];
@@ -48,6 +48,6 @@ int main() {
         }
     }
 
-    cout << paths[N].sum_b / paths[N].sum_c;
+    cout << std::setprecision(15) << (float)paths[N].sum_b / paths[N].sum_c;
 
 }
