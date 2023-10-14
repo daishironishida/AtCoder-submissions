@@ -39,7 +39,7 @@ int main() {
 
             if (paths.count(next.v)) {
                 Path &best = paths[next.v];
-                if (best.sum_b / best.sum_c > next_ratio) {
+                if (best.sum_b / best.sum_c < next_ratio) {
                     paths[next.v] = {next.v, current.sum_b + next.b, current.sum_c + next.c};
                 }
             } else {
