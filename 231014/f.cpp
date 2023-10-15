@@ -28,26 +28,28 @@ int main() {
     }
 
 
-    map<int, Path> paths;
-    paths[1] = {1, 0, 0};
+    map<int, vector<Path>> paths;
+    paths[1] = vector<Path>();
+    paths[1].push_back({1, 0, 0});
 
     for (int i = 1; i < N + 1; i++) {
-        Path current = paths[i];
         vector<Edge> &nexts = e[i];
         for (Edge &next : nexts) {
-            float next_ratio = float(current.sum_b + next.b) / (current.sum_c + next.c);
-
-            if (paths.count(next.v)) {
-                Path &best = paths[next.v];
-                if (best.sum_b / best.sum_c < next_ratio) {
-                    paths[next.v] = {next.v, current.sum_b + next.b, current.sum_c + next.c};
+            for (Path current : paths[i]) {
+                if (!paths.count(next.v)) {
+                    paths[next.v] = vector<Path>();
                 }
-            } else {
-                paths[next.v] = {next.v, current.sum_b + next.b, current.sum_c + next.c};
+
+                paths[next.v].push_back({next.v, current.sum_b + next.b, current.sum_c + next.c});
             }
         }
     }
 
-    cout << std::setprecision(15) << (double)paths[N].sum_b / paths[N].sum_c;
+    // find best
+    double best = 0;
+    for (Path path : paths[N]) {
+        best = max(best, (double)path.sum_b / path.sum_c);
+    }
 
+    cout << std::setprecision(15) << best << endl;
 }
