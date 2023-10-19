@@ -13,12 +13,13 @@ int main() {
         a.push_back(tmp);
     }
     
+    vector<bool> deleted(N, false);
     for (int i = N-1; i >= 0; i--) {
         if (a.at(i) == 1) {
             int count = 0;
             for (int j = i; j < N; j++) {
                 if (a.at(j) == 1 + count) {
-                    a.erase(a.begin() + j);
+                    deleted.at(j) = true;
                     count++;
                 } else {
                     break;
@@ -28,8 +29,10 @@ int main() {
     }
 
     int sum = 0;
-    for (int i = 0; i < a.size(); i++) {
-        sum += a.at(i);
+    for (int i = 0; i < N; i++) {
+        if (!deleted.at(i)) {
+            sum += a.at(i);
+        }
     }
     cout << sum << endl;
 
