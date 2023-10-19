@@ -5,10 +5,10 @@ using namespace std;
 int main() {
     int N;
     cin >> N;
-    deque<int> a;
+    deque<long> a;
 
     for (int i = 0; i < N; i++) {
-        int tmp;
+        long tmp;
         cin >> tmp;
         a.push_back(tmp);
     }
@@ -28,7 +28,7 @@ int main() {
         }
     }
 
-    int sum = 0;
+    long sum = 0;
     for (int i = 0; i < N; i++) {
         if (!deleted.at(i)) {
             sum += a.at(i);
