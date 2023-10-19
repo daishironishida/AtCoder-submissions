@@ -18,6 +18,9 @@ int main() {
         if (a.at(i) == 1) {
             int count = 0;
             for (int j = i; j < N; j++) {
+                if (deleted.at(j)) {
+                    continue;
+                }
                 if (a.at(j) == 1 + count) {
                     deleted.at(j) = true;
                     count++;
