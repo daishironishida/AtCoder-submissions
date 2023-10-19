@@ -5,7 +5,7 @@ using namespace std;
 int main() {
     int N;
     cin >> N;
-    list<int> a;
+    deque<int> a;
 
     for (int i = 0; i < N; i++) {
         int tmp;
@@ -13,12 +13,12 @@ int main() {
         a.push_back(tmp);
     }
     
-    for (auto itr = a.rbegin(); itr != a.rend(); itr++) {
-        if (*itr == 1) {
+    for (int i = N-1; i >= 0; i--) {
+        if (a.at(i) == 1) {
             int count = 0;
-            for (auto itr2 = itr.base(); itr2 != a.end(); itr2++) {
-                if (*itr2 == 1 + count) {
-                    itr2 = a.erase(itr2);
+            for (int j = i; j < N; j++) {
+                if (a.at(j) == 1 + count) {
+                    a.erase(a.begin() + j);
                     count++;
                 } else {
                     break;
@@ -28,8 +28,8 @@ int main() {
     }
 
     int sum = 0;
-    for (auto itr = a.begin(); itr != a.end(); itr++) {
-        sum += *itr;
+    for (int i = 0; i < a.size(); i++) {
+        sum += a.at(i);
     }
     cout << sum << endl;
 
