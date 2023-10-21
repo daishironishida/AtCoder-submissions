@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "vector": "cpp",
+        "limits": "cpp",
+        "iostream": "cpp",
+        "unordered_set": "cpp",
+        "cmath": "cpp",
+        "complex": "cpp",
+        "ostream": "cpp"
+    }
+}
