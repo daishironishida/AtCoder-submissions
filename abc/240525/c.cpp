@@ -12,7 +12,7 @@ int main() {
         cin >> a;
 
         int row = (a-1) % N;
-        int col = a / N;
+        int col = (a-1) / N;
 
 
         if (++count.at(row) == N) {
