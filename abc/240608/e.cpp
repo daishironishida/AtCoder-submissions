@@ -27,7 +27,7 @@ int main() {
         index++;
         order.push_back(i);
 
-        //cout << "first: " << i << "," << index << endl;
+        //cout << "first: " << i + 1 << "," << index << endl;
 
         int next = a.at(i) - 1;
         bool revisit = false;
@@ -38,37 +38,47 @@ int main() {
                 break;
             }
 
-            //cout << "next: " << next << "," << index << endl;
-
             // insert
             visited[next] = index;
             index++;
             order.push_back(next);
+
+            //cout << "next: " << next + 1 << "," << index << endl;
 
             next = a.at(next) - 1;
         }
 
 
         int cycle_size = index - visited[next];
+        int lastIndex;
         long sum;
         if (revisit) {
-            sum = nums[next] + 1;
+            sum = nums[next];
+            lastIndex = index - 1;
         } else {
-            sum = pow(2, cycle_size - 1);
-        }
-        for (int j = visited[next]; j < index; j++) {
-            nums[order.at(j)] = sum;
+            sum = cycle_size;
+            lastIndex = visited[next] - 1;
         }
 
-        for (int j = visited[next] - 1; j >= 0; j--) {
+        //cout << "finish: " << next + 1 << "," << index << "," << sum << endl;
+
+        if (!revisit) {
+            for (int j = visited[next]; j < index; j++) {
+                nums[order.at(j)] = sum;
+                //cout << "insert a: " << order.at(j) + 1 << "," << sum << endl;
+            }
+        }
+
+        for (int j = lastIndex; j >= 0; j--) {
             sum++;
             nums[order.at(j)] = sum;
+            //cout << "insert b: " << order.at(j) + 1 << "," << sum << endl;
         }
     }
 
     long sum = 0;
     for (pair<int, int> val : nums) {
-        //cout << val.first << "," << val.second << endl;
+        //cout << val.first + 1 << "," << val.second << endl;
         sum += val.second;
     }
     cout << sum;
