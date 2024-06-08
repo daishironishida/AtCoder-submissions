@@ -27,6 +27,8 @@ int main() {
         index++;
         order.push_back(i);
 
+        //cout << "first: " << i << "," << index << endl;
+
         int next = a.at(i) - 1;
         bool revisit = false;
         while (visited.find(next) == visited.end()) {
@@ -35,6 +37,8 @@ int main() {
                 revisit = true;
                 break;
             }
+
+            //cout << "next: " << next << "," << index << endl;
 
             // insert
             visited[next] = index;
@@ -48,23 +52,23 @@ int main() {
         int cycle_size = index - visited[next];
         long sum;
         if (revisit) {
-            sum = nums[next];
-        }  else {
-            sum = pow(2, cycle_size);
-            for (i = visited[next]; i < index; i++) {
-                nums[order.at(i)] = sum;
-            }
-
+            sum = nums[next] + 1;
+        } else {
+            sum = pow(2, cycle_size - 1);
+        }
+        for (int j = visited[next]; j < index; j++) {
+            nums[order.at(j)] = sum;
         }
 
-        for (i = visited[next] - 1; i >= 0; i--) {
+        for (int j = visited[next] - 1; j >= 0; j--) {
             sum++;
-            nums[order.at(i)] = sum;
+            nums[order.at(j)] = sum;
         }
     }
 
     long sum = 0;
     for (pair<int, int> val : nums) {
+        //cout << val.first << "," << val.second << endl;
         sum += val.second;
     }
     cout << sum;
