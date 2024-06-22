@@ -6,21 +6,7 @@
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}.out",
             "args": [],
-            "cwd": "${fileDirname}",
-            "stopOnEntry": true
-        },
-        {
-            "name": "C/C++: cpp アクティブ ファイルのビルドとデバッグ",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "lldb",
-            "preLaunchTask": "C/C++: cpp アクティブなファイルのビルド"
+            "cwd": "${fileDirname}"
         }
     ],
     "version": "2.0.0"
