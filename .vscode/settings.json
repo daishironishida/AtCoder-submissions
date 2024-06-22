@@ -6,7 +6,8 @@
         "unordered_set": "cpp",
         "cmath": "cpp",
         "complex": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "tuple": "cpp"
     },
     "code-runner.runInTerminal": true,
     "code-runner.executorMap": {
