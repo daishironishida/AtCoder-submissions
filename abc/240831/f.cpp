@@ -35,14 +35,14 @@ int main() {
         for (int r = 0; r < H; r++) {
             int c = i - r;
             if (c < 0 || c >= W) {
-                break;
+                continue;
             }
 
-            int sum ;
-            if (r > 1) {
+            int sum = 0;
+            if (r > 0) {
                 sum = rewards[make_pair(r-1, c)];
             }
-            if (c > 1) {
+            if (c > 0) {
                 sum = max(sum, rewards[make_pair(r, c-1)]);
             }
 
