@@ -4,10 +4,6 @@ using namespace std;
 
 class Path {
 public:
-    Path() {
-        current = 0;
-        visited.insert(0);
-    }
     Path(int start) {
         current = start;
         visited.insert(start);
@@ -29,10 +25,7 @@ int main() {
     }
 
     deque<Path> q;
-    Path start(0);
-    q.push_back(start);
-    unordered_map<int, Path> visited;
-    visited[0] = start;
+    q.push_back({0});
 
     while (!q.empty()) {
         Path current = q.front();
@@ -44,11 +37,10 @@ int main() {
             for (int v : current.visited) {
                 cout << v << ",";
             }
-            cout << endl;
             */
 
-            if (visited.find(next) != visited.end()) {
-                cout << current.visited.size() + visited[next].visited.size() - 1 << endl;
+            if (next == 0) {
+                cout << current.visited.size() << endl;
                 return 0;
             }
 
@@ -59,7 +51,6 @@ int main() {
             nextPath.visited.insert(next);
             nextPath.current = next;
             q.push_back(nextPath);
-            visited[current.current] = current;
         }
     }
     cout << -1;
