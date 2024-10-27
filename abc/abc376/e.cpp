@@ -25,29 +25,28 @@ void solve() {
         return a.first < b.first;
     });
 
-    std::multimap<int, int> b2a;
-    for (int r = 0; r < K - 1; r++) {
-        b2a.insert({sets.at(r).second, sets.at(r).first});
+    ll sum = 0;
+    priority_queue<int> pq;
+    for (int i = 0; i < K - 1; i++) {
+        sum += sets.at(i).second;
+        pq.push(sets.at(i).second);
     }
 
     ll min = __LONG_LONG_MAX__;
 
     for (int r = K-1; r < N; r++) {
+        int next = sets[r].second;
 
-        ll sum = sets[r].second;
-
-        auto itr = b2a.begin();
-        for (int i = 0; i < K - 1; i++) {
-            sum += itr->first;
-            itr++;
-        }
-
-        ll current = sum * sets.at(r).first;
+        ll current = (sum + next) * sets.at(r).first;
         if (current < min) {
             min = current;
         }
 
-        b2a.insert({sets.at(r).second, sets.at(r).first});
+        sum += next;
+        pq.push(next);
+        int out = pq.top();
+        pq.pop();
+        sum -= out;
     }
 
     cout << min << endl;
