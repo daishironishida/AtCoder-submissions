@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+typedef long long ll;
 
 void solve() {
     int N, K;
@@ -19,52 +20,34 @@ void solve() {
         sets.at(i).second = b;
     }
 
-    // sort by second
+    // sort by first
     sort(sets.begin(), sets.end(), [](pair<int, int> a, pair<int, int> b) {
-        if (a.second == b.second) {
-            return a.first < b.first;
-        }
-        return a.second < b.second;
+        return a.first < b.first;
     });
 
-    priority_queue<pair<int, int>> pq;
-    pair<int, int> pq_top;
-
-    long long sum = 0;
-    for (int i = 0; i < K; i++) {
-        pq.push(sets.at(i));
-        sum += sets.at(i).second;
-    }
-    pq_top = pq.top();
-    pq.pop();
-    sum *= pq_top.first;
-
-    for (int i = K; i < N; i++) {
-        //cout << "sum: " << sum << endl;
-        pair<int, int> next_top = pq.top();
-
-        long long minus = (pq_top.first - next_top.first) * (sum - pq_top.second) + pq_top.first + pq_top.second;
-        long long plus;
-        if (sets.at(i).first > next_top.first) {
-            plus = (sets.at(i).first - next_top.first) * (sum - pq_top.second) + sets.at(i).first + sets.at(i).second;
-        } else {
-            plus = next_top.first * sets.at(i).second;
-        }
-
-        if (minus > plus) {
-            sum = sum - minus + plus;
-            if (sets.at(i).first > next_top.first) {
-                pq_top = sets.at(i);
-            } else {
-                pq_top = next_top;
-                pq.pop();
-                pq.push(sets.at(i));
-            }
-        }
-
+    std::multimap<int, int> b2a;
+    for (int r = 0; r < K - 1; r++) {
+        b2a.insert({sets.at(r).second, sets.at(r).first});
     }
 
-    cout << sum << endl;
+    ll min = __LONG_LONG_MAX__;
+
+    for (int r = K-1; r < N; r++) {
+        ll sum = sets[r].second;
+        for (int i = 0; i < K - 1; i++) {
+            sum += sets.at(i).second;
+        }
+
+        ll current = sum * sets.at(r).first;
+        if (current < min) {
+            min = current;
+        }
+
+        b2a.insert({sets.at(r).second, sets.at(r).first});
+    }
+
+    cout << "result" << endl;
+    cout << min << endl;
 
 }
 
