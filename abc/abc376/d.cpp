@@ -2,16 +2,6 @@
 
 using namespace std;
 
-class Path {
-public:
-    Path(int start) {
-        current = start;
-        visited.insert(start);
-    }
-    unordered_set<int> visited;
-    int current;
-};
-
 int main() {
     int N, M;
     cin >> N >> M;
@@ -24,35 +14,35 @@ int main() {
         map.at(a-1).push_back(b-1);
     }
 
-    deque<Path> q;
-    q.push_back({0});
+    deque<int> q;
+    q.push_back(0);
+    unordered_map<int, int> distance;
+    distance[0] = 0;
+
+    int minDist = M + 1;
 
     while (!q.empty()) {
-        Path current = q.front();
+        int current = q.front();
         q.pop_front();
 
-        for (int next : map.at(current.current)) {
-            /*
-            cout << "visit: " << current.current << "," << next << ", visited: ";
-            for (int v : current.visited) {
-                cout << v << ",";
-            }
-            */
-
-            if (next == 0) {
-                cout << current.visited.size() << endl;
-                return 0;
-            }
-
-            if (current.visited.find(next) != current.visited.end()) {
+        for (int next : map.at(current)) {
+            if (distance.find(next) != distance.end()) {
+                int currentDist =  distance[next] + distance[current] + 1;
+                if (currentDist < minDist) {
+                    minDist = currentDist;
+                }
                 continue;
             }
-            Path nextPath = current;
-            nextPath.visited.insert(next);
-            nextPath.current = next;
-            q.push_back(nextPath);
+
+            distance[next] = distance[current] + 1;
+            q.push_back(next);
         }
+
     }
-    cout << -1;
+    if (minDist == M + 1) {
+        cout << -1;
+        return 0;
+    }
+    cout << minDist;
 
 }
