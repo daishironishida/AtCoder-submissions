@@ -19,19 +19,14 @@ int main() {
     unordered_map<int, int> distance;
     distance[0] = 0;
 
-    int minDist = M + 1;
-
     while (!q.empty()) {
         int current = q.front();
         q.pop_front();
 
         for (int next : map.at(current)) {
             if (next == 0) {
-                int currentDist = distance[current] + 1;
-                if (currentDist < minDist) {
-                    minDist = currentDist;
-                }
-                continue;
+                cout << distance[current] + 1 << endl;
+                return 0;
             }
             if (distance.find(next) != distance.end()) {
                 continue;
@@ -42,10 +37,6 @@ int main() {
         }
 
     }
-    if (minDist == M + 1) {
-        cout << -1;
-        return 0;
-    }
-    cout << minDist;
+    cout << -1;
 
 }
