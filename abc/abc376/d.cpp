@@ -26,11 +26,14 @@ int main() {
         q.pop_front();
 
         for (int next : map.at(current)) {
-            if (distance.find(next) != distance.end()) {
-                int currentDist =  distance[next] + distance[current] + 1;
+            if (next == 0) {
+                int currentDist = distance[current] + 1;
                 if (currentDist < minDist) {
                     minDist = currentDist;
                 }
+                continue;
+            }
+            if (distance.find(next) != distance.end()) {
                 continue;
             }
 
