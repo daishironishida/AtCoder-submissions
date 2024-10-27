@@ -33,9 +33,13 @@ void solve() {
     ll min = __LONG_LONG_MAX__;
 
     for (int r = K-1; r < N; r++) {
+
         ll sum = sets[r].second;
+
+        auto itr = b2a.begin();
         for (int i = 0; i < K - 1; i++) {
-            sum += sets.at(i).second;
+            sum += itr->first;
+            itr++;
         }
 
         ll current = sum * sets.at(r).first;
@@ -46,7 +50,6 @@ void solve() {
         b2a.insert({sets.at(r).second, sets.at(r).first});
     }
 
-    cout << "result" << endl;
     cout << min << endl;
 
 }
