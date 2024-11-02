@@ -3,6 +3,15 @@
 using namespace std;
 typedef long long ll;
 
+struct pairhash {
+public:
+  template <typename T, typename U>
+  std::size_t operator()(const std::pair<T, U> &x) const
+  {
+    return std::hash<T>()(x.first) ^ std::hash<U>()(x.second);
+  }
+};
+
 int main() {
     int H, W, K;
     cin >> H >> W >> K;
@@ -24,19 +33,18 @@ int main() {
     ll sum = 0;
     for (int i = 0; i < H; i++) {
         for (int j = 0; j < W; j++) {
+            if (a.at(i).at(j) == 1) {
+                continue;
+            }
+
             // start from i,j
 
-            struct hashFunction {
-                size_t operator()(const pair<int , int> &x) const{
-                    return x.first ^ x.second;
-                }
-            };
             class Path{
             public:
-                unordered_set<pair<int, int>, hashFunction> path;
+                unordered_set<pair<int, int>, pairhash> path;
                 pair<int, int> last;
                 Path(pair<int, int> first) {
-                    path = unordered_set<pair<int, int>, hashFunction>();
+                    path = unordered_set<pair<int, int>, pairhash>();
                     path.insert(first);
                     last = first;
                 }
@@ -47,12 +55,16 @@ int main() {
                 }
             };
 
-            deque<Path> q;
-            q.emplace_back(make_pair(i, j));
-            for (int k = 1; k < K; k++) {
-                deque<Path> next_q;
-                for (Path& path : q) {
-                    pair<int, int> current = path.last;
+            vector<shared_ptr<Path>> q;
+            q.push_back(make_shared<Path>(make_pair(i, j)));
+            for (int k = 0; k < K; k++) {
+                vector<shared_ptr<Path>> next_q;
+                next_q.reserve(q.size() * 4);
+                
+                //cout << "loop:" << k << endl;
+                for (shared_ptr<Path> path : q) {
+                    pair<int, int> current = path->last;
+
 
                     vector<pair<int, int>> nexts;
                     nexts.push_back(make_pair(current.first + 1, current.second));
@@ -67,16 +79,26 @@ int main() {
                         if (a.at(next.first).at(next.second) == 1) {
                             continue;
                         }
-                        if (path.path.count(make_pair(next.first, next.second)) != 0) {
+                        if (path->path.count(next) != 0) {
                             continue;
                         }
-                        Path nextPath = path;
-                        path.update(next);
-                        next_q.push_back(path);
+
+                        /*
+                        cout << "path: ";
+                        for (auto& p : path.path) {
+                            cout << p.first << "," << p.second << " ";
+                        }
+                        cout << "append: " << next.first << "," << next.second << endl;
+                        */
+
+                        Path nextPath = *path;
+                        nextPath.update(next);
+                        next_q.push_back(make_shared<Path>(nextPath));
                     }
                 }
-                q = next_q;
+                q = std::move(next_q);
             }
+            //cout << i << "," << j << ": " << q.size() <<endl;
             sum += q.size();
         }
     }
